@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Dimensions, View} from "react-native";
 import {Button, Display} from "../../components";
+import {styles} from './style'
 
 require("../../lib/swisscalc/swisscalc.lib.format.js");
 require("../../lib/swisscalc/swisscalc.lib.operator.js");
@@ -12,7 +13,6 @@ require("../../lib/swisscalc/swisscalc.calc.calculator.js");
 
 const oc = global.swisscalc.lib.operatorCache;
 const calc = new global.swisscalc.calc.calculator();
-
 
 const {
     container,
