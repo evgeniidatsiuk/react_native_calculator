@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-const Display = (props) => {
+const Result = (props) => {
   const styles = StyleSheet.create({
-    container: { padding: 20 },
+    container: { padding: 40 },
     display: { fontSize: 70, color: "black", textAlign: "right" },
   });
 
@@ -14,4 +14,4 @@ const Display = (props) => {
   );
 };
 
-export default Display;
+export default Result;
