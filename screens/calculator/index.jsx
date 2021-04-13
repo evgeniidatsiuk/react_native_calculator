@@ -1,57 +1,46 @@
-import React, { useState } from "react";
-import { Dimensions, StyleSheet, View, Text } from "react-native";
-import { Button, Display } from "../../components";
+import React, {useState} from "react";
+import {Dimensions, View} from "react-native";
+import {Button, Display} from "../../components";
 
-require("./../../lib/swisscalc.lib.format.js");
-require("./../../lib/swisscalc.lib.operator.js");
-require("./../../lib/swisscalc.lib.operatorCache.js");
-require("./../../lib/swisscalc.lib.shuntingYard.js");
-require("./../../lib/swisscalc.display.numericDisplay");
-require("./../../lib/swisscalc.display.memoryDisplay");
-require("./../../lib/swisscalc.calc.calculator.js");
+require("../../lib/swisscalc/swisscalc.lib.format.js");
+require("../../lib/swisscalc/swisscalc.lib.operator.js");
+require("../../lib/swisscalc/swisscalc.lib.operatorCache.js");
+require("../../lib/swisscalc/swisscalc.lib.shuntingYard.js");
+require("../../lib/swisscalc/swisscalc.display.numericDisplay");
+require("../../lib/swisscalc/swisscalc.display.memoryDisplay");
+require("../../lib/swisscalc/swisscalc.calc.calculator.js");
 
 const oc = global.swisscalc.lib.operatorCache;
 const calc = new global.swisscalc.calc.calculator();
 
-const CalculatorScreen = () => {
-  const [value, setValue] = useState("0");
-  const [orientation, setOrientation] = useState("portrait");
 
-  const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: "white" },
-    displayContainer: { flex: 1, justifyContent: "flex-end" },
-    buttonRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
-    landscapeButtonRow: {
-      flexDirection: "row",
-    },
-    buttonContainer: { paddingBottom: 20 },
-  });
-
-  const {
+const {
     container,
     displayContainer,
     buttonRow,
     landscapeButtonRow,
     buttonContainer,
-  } = styles;
+} = styles;
 
-  Dimensions.addEventListener("change", () => {
-    const { width, height } = Dimensions.get("screen");
-    width > height ? setOrientation("landscape") : setOrientation("portrait");
-  });
+const CalculatorScreen = () => {
+    const [value, setValue] = useState("0");
+    const [orientation, setOrientation] = useState("portrait");
 
-  const onDigitPress = (digit) => {
-    calc.addDigit(digit);
-    setValue(calc.getMainDisplay());
-  };
+    Dimensions.addEventListener("change", () => {
+        const {width, height} = Dimensions.get("screen");
+        width > height ? setOrientation("landscape") : setOrientation("portrait");
+        console.log('Orientation', orientation)
+    });
 
-  const onClearPress = () => {
-    calc.clear();
-    setValue(calc.getMainDisplay());
-  };
+    const onDigitPress = (digit) => {
+        calc.addDigit(digit);
+        setValue(calc.getMainDisplay());
+    };
+
+    const onClearPress = () => {
+        calc.clear();
+        setValue(calc.getMainDisplay());
+    };
 
   const onPlusMinusPress = () => {
     calc.negate();
@@ -306,42 +295,42 @@ const CalculatorScreen = () => {
 
   function renderLandscape() {
     return (
-      <View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between'}}>
-        <View style={{paddingLeft: 20}}>
-          <Display value={value} />
-        </View>
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{display: 'flex'}}>
+                <Display value={value}/>
+            </View>
 
-        <View style={{ flexDirection: "column" }}>
-          <View style={landscapeButtonRow}>
-            <Button
-              onPress={onClearPress}
-              title="C"
-              color="black"
-              backgroundColor="#a5a5a5"
-              width={70}
-              height={70}
-              fontSize={25}
-            />
-            <Button
-              onPress={onPlusMinusPress}
-              title="+/-"
-              color="black"
-              backgroundColor="#a5a5a5"
-              width={70}
-              height={70}
-              fontSize={25}
-            />
-            <Button
-              onPress={() => {
-                onUnaryOperatorPress(oc.PercentOperator);
-              }}
-              title="%"
-              color="black"
-              backgroundColor="#a5a5a5"
-              width={70}
-              height={70}
-              fontSize={25}
-            />
+            <View style={{flex: 1, flexDirection: "column"}}>
+                <View style={landscapeButtonRow}>
+                    <Button
+                        onPress={onClearPress}
+                        title="A/C"
+                        color="black"
+                        backgroundColor="#a5a5a5"
+                        width={70}
+                        height={70}
+                        fontSize={25}
+                    />
+                    <Button
+                        onPress={onPlusMinusPress}
+                        title="+/-"
+                        color="black"
+                        backgroundColor="#a5a5a5"
+                        width={70}
+                        height={70}
+                        fontSize={25}
+                    />
+                    <Button
+                        onPress={() => {
+                            onUnaryOperatorPress(oc.PercentOperator);
+                        }}
+                        title="%"
+                        color="black"
+                        backgroundColor="#a5a5a5"
+                        width={70}
+                        height={70}
+                        fontSize={25}
+                    />
             <Button
               onPress={() => {
                 onBinaryOperatorPress(oc.DivisionOperator);

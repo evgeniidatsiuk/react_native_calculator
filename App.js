@@ -1,5 +1,5 @@
 import React from "react";
-import CalculatorScreen from "./screens/calculator/index";
+import CalculatorScreen from "./screens/calculator";
 
 const App = () => {
   return <CalculatorScreen />;
